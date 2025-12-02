@@ -1,8 +1,25 @@
 "use client";
+import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { Layout } from "@/components/layout";
+import { Loader2 } from "lucide-react";
+import { getPosts } from "@/lib/post";
+import { PostCard } from "@/components/post-card";
 
 export default function Home() {
+  const {
+    data: posts,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["posts"],
+    queryFn: getPosts,
+  });
+
+  const publishedPosts = posts?.filter((p) => p.status === "published") || [];
+
+  console.log("uai", posts);
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -43,7 +60,7 @@ export default function Home() {
           </h2>
         </div>
 
-        {/* {isLoading ? (
+        {isLoading ? (
           <div className="flex items-center justify-center py-20">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </div>
@@ -61,11 +78,7 @@ export default function Home() {
               <PostCard key={post.id} post={post} />
             ))}
           </div>
-        )} */}
-
-        <div className="text-center py-20 text-muted-foreground">
-          Nenhum post publicado ainda.
-        </div>
+        )}
       </section>
     </Layout>
   );
