@@ -5,6 +5,7 @@ import { Layout } from "@/components/layout";
 import { Loader2 } from "lucide-react";
 import { getPosts } from "@/lib/post";
 import { PostCard } from "@/components/post-card";
+import QueryProvider from "@/components/QueryProvider";
 
 export default function Home() {
   const {
